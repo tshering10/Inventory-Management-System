@@ -1,0 +1,10 @@
+{% extends "inventory/base.html" %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+    <div class="container mt-3">
+        <h2>Welcome to Inventory Management System</h2>
+        <div class='btn btn-success '>
+            <a href="{% url "signup" %}" class="text-white text-decoration-none">Get Started</a>
+        </div>
+    </div>
+{% endblock content %}

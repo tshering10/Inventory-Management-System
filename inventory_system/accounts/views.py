@@ -17,15 +17,9 @@ class CusotmLoginView(LoginView):
         user = self.request.user
         if user.is_superuser or user.is_staff:
             return reverse_lazy("admin-dashboard")
-        return reverse_lazy('user-dashboard')
+        return reverse_lazy('dashboard')
     
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login')
     
-class UserDashboard(LoginRequiredMixin, TemplateView):
-    template_name = 'accounts/user_dashboard.html'
-    login_url = reverse_lazy('login')
-
-class AdminDashboard(LoginRequiredMixin, TemplateView):
-    template_name = 'accounts/admin_dashboard.html'
     
