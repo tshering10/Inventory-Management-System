@@ -3,11 +3,15 @@ from django.views.generic import TemplateView, ListView, CreateView, DeleteView,
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from inventory.models import Product
+from inventory.forms import Product_Create_Form
 
 # Create your views here.
 
 class HomeView(TemplateView):
     template_name = "inventory/home.html"
+
+class AdminDashboard(TemplateView):
+    template_name = "inventory/admin_dashboard.html"
 
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
@@ -16,3 +20,8 @@ class ProductListView(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         return Product.objects.all()
+
+class ProductCreateView(CreateView):
+    form_class = Product_Create_Form
+    template_name = "inventory/add_product.html"
+    success_url = reverse_lazy("dashboard")

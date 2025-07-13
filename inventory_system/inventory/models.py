@@ -13,6 +13,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,blank=True)
     quantity = models.PositiveIntegerField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    brand = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

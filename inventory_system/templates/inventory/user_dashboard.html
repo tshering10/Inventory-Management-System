@@ -90,7 +90,7 @@
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">Your Products Overview</h4>
-                <a href="#" class="btn btn-outline-secondary btn-sm">
+                <a href="{% url "add-product" %}" class="btn btn-outline-secondary btn-sm">
                     <i class="fas fa-plus me-2"></i>Add Product</a>
             </div>
             <div class="card-body p-0">
@@ -101,6 +101,7 @@
                                 <tr>
                                     <th scope="col">Product Name</th>
                                     <th scope="col">Category</th>
+                                    <th scope="col">Brand</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Price (Rs.)</th>
                                     <th scope="col" class="text-end">Actions</th>
@@ -111,11 +112,13 @@
                                 <tr>
                                     <td><strong>{{ product.name }}</strong></td>
                                     <td>{{ product.category.name|default:"N/A" }}</td>
+                                    <td>{{ product.brand }}</td>
                                     <td>
-                                        <span class="badge rounded-pill {% if product.quantity <= 10 %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                                        <span class="badge rounded-pill {% if product.quantity <= 10 %}bg-warning text-dark {% else %} text-dark{% endif %}">
                                             {{ product.quantity }}
                                         </span>
                                     </td>
+                                    
                                     <td>Rs. {{ product.price|floatformat:2 }}</td>
                                     <td class="text-end">
                                         <a href="#" class="btn btn-sm btn-outline-primary me-2" title="Edit Product">
