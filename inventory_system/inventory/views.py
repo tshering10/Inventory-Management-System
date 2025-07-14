@@ -19,7 +19,7 @@ class ProductListView(LoginRequiredMixin, ListView):
     context_object_name = 'products'
     
     def get_queryset(self):
-        return Product.objects.all()
+        return Product.objects.filter(owner = self.request.user)
 
 class ProductCreateView(CreateView):
     form_class = Product_Create_Form
@@ -32,3 +32,11 @@ class EditProductView(LoginRequiredMixin,UpdateView):
     fields = ['name','quantity','price','brand','category','owner']
     success_url = reverse_lazy('dashboard')
     
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Product
+    template_name = "inventory/delete_product.html"
+    success_url = reverse_lazy("dashboard")
+    
+    def test_func(self):
+        product = self.get_object()
+        return self.request.user == product.owner

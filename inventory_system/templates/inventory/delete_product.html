@@ -1,0 +1,35 @@
+{% extends "inventory/base.html" %}
+{% block title %}Delete Product{% endblock title %}
+{% block content %}
+<div class="container mt-3">
+    <h5>Confirm Delete Product</h5>
+    <table class="table">
+        <tr>
+            <th>Product Name</th>
+            <td>{{ object.name }}</td>
+        </tr>
+        <tr>
+            <th>Brand</th>
+            <td>{{ object.brand }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ object.category.name }}</td>
+        </tr>
+        <tr>
+            <th>Price</th>
+            <td>{{ object.price }}</td>
+        </tr>
+        <tr>
+            <th>Quantity</th>
+            <td>{{ object.quantity }}</td>
+        </tr>
+    </table>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="{% url 'product-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock content %}
