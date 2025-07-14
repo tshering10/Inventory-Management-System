@@ -57,7 +57,7 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title text-muted mb-3">Total Products</h5>
-                        <h2 class="text-primary display-4 fw-bold">{{ total_products }}</h2>
+                        <h2 class="text-secondary fw-sm">{{ total_products|default:"--" }}</h2>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title text-muted mb-3">Low Stock Items</h5>
-                        <h2 class="text-warning display-4 fw-bold">{{ low_stock_count }}</h2>
+                        <h2 class="text-secondary fw-sm">{{ low_stock_count|default:"--" }}</h2>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title text-muted mb-3">Product Categories</h5>
-                        <h2 class="text-info display-4 fw-bold">{{ total_categories }}</h2>
+                        <h2 class="text-secondary fw-sm">{{ total_categories|default:"--" }}</h2>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body text-center">
                         <h5 class="card-title text-muted mb-3">Active Suppliers</h5>
-                        <h2 class="text-success display-4 fw-bold">{{ total_suppliers }}</h2>
+                        <h2 class="text-secondary fw-sm">{{ total_suppliers|default:"--" }}</h2>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,7 @@
                             <tbody>
                                 {% for product in products %}
                                 <tr>
-                                    <td><strong>{{ product.name }}</strong></td>
+                                    <td>{{ product.name }}</td>
                                     <td>{{ product.category.name|default:"N/A" }}</td>
                                     <td>{{ product.brand }}</td>
                                     <td>

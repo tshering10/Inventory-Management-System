@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from inventory.models import Product
+from inventory.models import Product, Category
 from inventory.forms import Product_Create_Form
 
 # Create your views here.
@@ -20,6 +20,19 @@ class ProductListView(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         return Product.objects.filter(owner = self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        
+        user_products = Product.objects.filter(owner=self.request.user)
+        
+        context['total_products'] = user_products.count()
+        # context['total_categories'] = Category.objects.count() #for all the categories in the system
+        
+        context['total_categories'] = user_products.values('category').distinct().count()
+        context['low_stock_count'] = user_products.filter(quantity__lte=10).count()
+
+        return context
 
 class ProductCreateView(CreateView):
     form_class = Product_Create_Form
