@@ -121,7 +121,7 @@
                                     
                                     <td>Rs. {{ product.price|floatformat:2 }}</td>
                                     <td class="text-end">
-                                        <a href="#" class="btn btn-sm btn-outline-primary me-2" title="Edit Product">
+                                        <a href="{% url "edit-product" product.pk %}" class="btn btn-sm btn-outline-primary me-2" title="Edit Product">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a href="#" class="btn btn-sm btn-outline-danger" title="Delete Product">

@@ -25,3 +25,10 @@ class ProductCreateView(CreateView):
     form_class = Product_Create_Form
     template_name = "inventory/add_product.html"
     success_url = reverse_lazy("dashboard")
+    
+class EditProductView(LoginRequiredMixin,UpdateView):
+    model = Product
+    template_name = "inventory/edit_product.html"
+    fields = ['name','quantity','price','brand','category','owner']
+    success_url = reverse_lazy('dashboard')
+    
