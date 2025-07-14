@@ -4,15 +4,38 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from inventory.models import Product, Category
 from inventory.forms import Product_Create_Form
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 class HomeView(TemplateView):
     template_name = "inventory/home.html"
 
-class AdminDashboard(TemplateView):
+class AdminDashboard(LoginRequiredMixin,UserPassesTestMixin,ListView):
+    model = User
     template_name = "inventory/admin_dashboard.html"
+    context_object_name = 'users'
+    
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff
+    
+    def get_queryset(self):
+        return User.objects.exclude(is_staff=True) # excluding the admin itself the users' list 
 
+# class UserDetails(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+#     model = User
+#     template_name = "inventory/user_details.html"
+#     context_object_name = "user_profile"
+    
+#     def test_func(self):
+#         return self.request.user.is_superuser or self.request.user.is_staff
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+        
+#         context['view_products'] = Product.objects.filter(owner=self.get_object())
+#         return context
+    
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = "inventory/user_dashboard.html"
