@@ -22,19 +22,19 @@ class AdminDashboard(LoginRequiredMixin,UserPassesTestMixin,ListView):
     def get_queryset(self):
         return User.objects.exclude(is_staff=True) # excluding the admin itself the users' list 
 
-# class UserDetails(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-#     model = User
-#     template_name = "inventory/user_details.html"
-#     context_object_name = "user_profile"
+class UserDetails(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = User
+    template_name = "inventory/user_details.html"
+    context_object_name = "user_profile"
     
-#     def test_func(self):
-#         return self.request.user.is_superuser or self.request.user.is_staff
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff
     
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         
-#         context['view_products'] = Product.objects.filter(owner=self.get_object())
-#         return context
+        context['products'] = Product.objects.filter(owner=self.get_object())   
+        return context
     
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
@@ -53,7 +53,7 @@ class ProductListView(LoginRequiredMixin, ListView):
         # context['total_categories'] = Category.objects.count() #for all the categories in the system
         
         context['total_categories'] = user_products.values('category').distinct().count()
-        context['low_stock_count'] = user_products.filter(quantity__lte=10).count()
+        context['low_stock_count'] = user_products.filter(quantity__lt=10).count()
 
         return context
 

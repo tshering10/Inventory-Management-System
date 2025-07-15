@@ -114,7 +114,7 @@
                                     <td>{{ product.category.name|default:"N/A" }}</td>
                                     <td>{{ product.brand }}</td>
                                     <td>
-                                        <span class="badge rounded-pill {% if product.quantity <= 10 %}bg-warning text-dark {% else %} text-dark{% endif %}">
+                                        <span class="badge rounded-pill {% if product.quantity < 10 %}bg-warning text-dark {% else %} text-dark{% endif %}">
                                             {{ product.quantity }}
                                         </span>
                                     </td>
