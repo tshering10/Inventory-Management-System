@@ -76,3 +76,9 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         product = self.get_object()
         return self.request.user == product.owner
+
+class AboutUs_view(TemplateView):
+    template_name = "inventory/about_us.html"
+    
+class ContactUs_view(TemplateView):
+    template_name = "inventory/contact_us.html"

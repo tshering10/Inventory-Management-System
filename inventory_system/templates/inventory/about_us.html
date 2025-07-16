@@ -1,0 +1,10 @@
+{% extends "inventory/base.html" %}
+{% block title %}About Us{% endblock title %}
+{% block content %}
+    <div class="container mt-5 py-5">
+        <h1 class="text-center mb-4">About Our Company</h1>
+        <p>This is a dedicated page for detailed information about our company, its mission, values, and history. We are passionate about providing efficient inventory solutions.</p>
+        <p>More detailed content about the team, vision, and unique selling propositions will go here.</p>
+        <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+    </div>
+{% endblock content %}
