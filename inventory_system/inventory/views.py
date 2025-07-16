@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from inventory.models import Product, Category
-from inventory.forms import Product_Create_Form
+from inventory.forms import Product_Create_Form, ContactMessageForm
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -80,5 +80,12 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class AboutUs_view(TemplateView):
     template_name = "inventory/about_us.html"
     
-class ContactUs_view(TemplateView):
+class ContactUs_view(FormView):
+    form_class = ContactMessageForm
     template_name = "inventory/contact_us.html"
+    success_url = reverse_lazy("contact_us")
+    
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    

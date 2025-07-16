@@ -1,24 +1,26 @@
 {% extends "inventory/base.html" %}
 {% block title %}Contact Us{% endblock title %}
+{% load widget_tweaks %}
 {% block content %}
-    <div class="container mt-5 py-5">
+    <div class="container mt-3 py-5">
         <h1 class="text-center mb-4">Get in Touch</h1>
         <p class="text-center">For any inquiries, support, or feedback, please use the form below or find our contact details.</p>
         
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form>
-                    <div class="mb-3">
-                        <label for="contactName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="contactName" placeholder="Your Name">
+        <div class="row justify-content-center  ">
+            <div class="col-md-5 col-lg-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <label for="form.name.id_for_label" class="form-label"><h6>Name</h6></label>
+                        {{ form.name|add_class:"form-control"|attr:"placeholder:Your name" }}
                     </div>
-                    <div class="mb-3">
-                        <label for="contactEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="contactEmail" placeholder="name@example.com">
-                    </div>
-                    <div class="mb-3">
-                        <label for="contactMessage" class="form-label">Message</label>
-                        <textarea class="form-control" id="contactMessage" rows="5" placeholder="Your message"></textarea>
+                    <div class="mb-3 mt-3">
+                        <label for="form.email.id_for_label" class="form-label"><h6>Email Address</h6></label>
+                        {{ form.email|add_class:"form-control"|attr:"placeholder:example@gmail.com" }}
+                    <div class="mb-2 mt-3">
+                        <label for="form.message.id_for_label" class="form-label"><h6>Message</h6></label>
+                        {{ form.message|add_class:"form-control"|attr:"rows:5"|attr:"placeholder:Write your message" }}
+                        
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <a href="{% url 'home' %}" class="btn btn-secondary mt-3 px-2 me-3">Back to Home</a>
