@@ -1,10 +1,112 @@
 {% extends "inventory/base.html" %}
 {% block title %}Home{% endblock title %}
+
 {% block content %}
-    <div class="container mt-3">
-        <h2>Welcome to Inventory Management System</h2>
-        <div class='btn btn-success '>
-            <a href="{% url "signup" %}" class="text-white text-decoration-none">Get Started</a>
+<div class="container py-4">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <h1 class="display-4 mb-4 text-center text-md-start">Smart Inventory System</h1>
+            <p class="lead mb-4 text-center text-md-start">Take control of your stock with our intuitive and powerful inventory management system. From tracking to reporting, we've got you covered.</p>
+    
+            <img src="https://img.freepik.com/free-vector/warehouse-management-abstract-concept_335657-3175.jpg" class="img-fluid rounded d-block mx-auto" alt="Modern Warehouse" style="max-height: 350px;">
+        </div>
+
+        {#signup form #}
+        <div class="col-md-4">
+            <div class="card shadow-sm p-2">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Create Your Account</h2>
+                    
+                    <form method="post" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                        
+                        {# Display form errors if any exist from a previous failed submission to /signup #}
+                        {% if form.errors %}
+                            <div class="alert alert-danger mb-3" role="alert">
+                                {% for field, errors in form.errors.items %}
+                                    {% if field == '__all__' %}
+                                        {% for error in errors %}
+                                            <p class="mb-0">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if not form.non_field_errors and form.errors %}
+                                    <p class="mb-0">Please correct the errors below.</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Username</label>
+                            <input type="text" name="username" id="id_username" class="form-control" required>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email address</label>
+                            <input type="email" name="email" id="id_email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">Password</label>
+                            <input type="password" name="password" id="id_password1" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password2" class="form-label">Confirm Password</label>
+                            <input type="password" name="password2" id="id_password2" class="form-control" required>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Sign Up Now</button>
+                        </div>
+                        <p class="text-center text-muted mt-3 mb-0">
+                            Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Login here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
+
+    <footer class="bg-dark text-white pt-4 pb-3 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- About us -->
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Inventory System</h5>
+                <p class="text-white-50">
+                A simple and powerful tool to manage your products, stock, and users. Built with Django & MySQL.
+                </p>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled">
+                <li><a href="{% url 'home' %}" class="text-white-50 text-decoration-none">Home</a></li>
+                <li><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
+                <li><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                <li><a href="#" class="text-white-50 text-decoration-none">Pricing</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Social Media -->
+            <div class="col-md-4">
+                <h5 class="text-uppercase">Follow Us</h5>
+                <a href="#" class="text-white-50 me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                <a href="#" class="text-white-50 me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-white-50 me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-white-50"><i class="fab fa-linkedin fa-lg"></i></a>
+            </div>
+
+        </div>
+
+        <!-- Bottom line -->
+        <div class="text-center mt-4 border-top pt-3 text-white-50">
+            &copy; 2025 Inventory System. All rights reserved.
+        </div>
+    </div>
+</footer>
+
 {% endblock content %}
