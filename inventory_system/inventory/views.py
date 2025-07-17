@@ -3,7 +3,7 @@ from django.views.generic import TemplateView, ListView, CreateView, DeleteView,
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from inventory.models import Product, Category
-from inventory.forms import Product_Create_Form, ContactMessageForm
+from inventory.forms import  ContactMessageForm, ProductForm
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -58,15 +58,30 @@ class ProductListView(LoginRequiredMixin, ListView):
         return context
 
 class ProductCreateView(CreateView):
-    form_class = Product_Create_Form
+    form_class = ProductForm
     template_name = "inventory/add_product.html"
     success_url = reverse_lazy("dashboard")
     
+    def form_valid(self, form):
+        product = form.save(commit=False) # Get product object form the form, and yet not saving to database
+        # Assigning currently logged in user as a owner
+        product.owner = self.request.user
+        
+        product.save()
+        return super().form_valid(form)
+    
 class EditProductView(LoginRequiredMixin,UpdateView):
     model = Product
+    fields = ['name','quantity','price','brand','category']
     template_name = "inventory/edit_product.html"
-    fields = ['name','quantity','price','brand','category','owner']
     success_url = reverse_lazy('dashboard')
+    
+    def form_valid(self, form):
+        product = form.save(commit=False)
+        product.category = form.changed_data['category']
+        product.save()
+        return super().form_valid(form)
+    
     
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
