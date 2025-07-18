@@ -31,3 +31,15 @@ class ContactMessage(models.Model):
     
     def __str__(self):
         return self.name
+    
+# Suppliers model
+
+class Supplier(models.Model):
+    company_name = models.CharField(max_length=150)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    address = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.company_name
