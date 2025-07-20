@@ -35,6 +35,7 @@ class ContactMessage(models.Model):
 # Suppliers model
 
 class Supplier(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=150)
     email = models.EmailField()
     phone = models.CharField(max_length=15)
