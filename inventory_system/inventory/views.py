@@ -107,7 +107,7 @@ class ContactUs_view(FormView):
 
 class SupplierListView(ListView, LoginRequiredMixin):
     model = Supplier
-    template_name = "inventory/supplier_list.html"
+    template_name = "inventory/supplier/supplier_list.html"
     context_object_name = "suppliers"
     
     def get_queryset(self):
@@ -116,7 +116,7 @@ class SupplierListView(ListView, LoginRequiredMixin):
 class SupplierCreateView(CreateView):
     model = Supplier
     form_class = SupplierForm
-    template_name = "inventory/supplier_create.html"
+    template_name = "inventory/supplier/supplier_create.html"
     success_url = reverse_lazy('supplier_list')
     
     def form_valid(self, form):
@@ -125,3 +125,21 @@ class SupplierCreateView(CreateView):
         supplier.save()
         return super().form_valid(form)
     
+class SupplierUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Supplier
+    form_class = SupplierForm
+    template_name = "inventory/supplier/supplier_update.html"
+    success_url = reverse_lazy("supplier_list")
+    
+    def test_func(self):
+        supplier = self.get_object()
+        return supplier.owner == self.request.user
+    
+class SupplierDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Supplier
+    template_name = "inventory/supplier/supplier_delete.html"
+    success_url = reverse_lazy('supplier_list')
+
+    def test_func(self):
+        supplier = self.get_object()
+        return supplier.owner == self.request.user

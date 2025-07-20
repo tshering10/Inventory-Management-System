@@ -4,7 +4,8 @@ from inventory.views import (
     HomeView, ProductListView, AdminDashboard,
     ProductCreateView, EditProductView, ProductDeleteView,
     UserDetails, AboutUs_view, ContactUs_view,
-    SupplierListView, SupplierCreateView
+    SupplierListView, SupplierCreateView, SupplierUpdateView,
+    SupplierDeleteView
     
 )
 
@@ -23,4 +24,6 @@ urlpatterns = [
     
     path('supplier/',SupplierListView.as_view(), name="supplier_list"),
     path('create-supplier/',SupplierCreateView.as_view(), name="add_supplier"),
+    path('supplier/<int:pk>/update',SupplierUpdateView.as_view(), name="edit_supplier"),
+    path('supplier/<int:pk>/delete',SupplierDeleteView.as_view(), name="delete_supplier"),
 ]

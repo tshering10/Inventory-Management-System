@@ -1,0 +1,31 @@
+{% extends "inventory/base.html" %}
+{% block title %}Delete Supplier{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <h4>Confirm Delete Supplier</h4>
+    <table class="table">
+        <tr>
+            <th>Company Name</th>
+            <td>{{ object.company_name }}</td>
+        </tr>
+        <tr>
+            <th>Email Address</th>
+            <td>{{ object.email }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ object.phone }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ object.address }}</td>
+        </tr>
+    </table>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="{% url 'supplier_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock content %}

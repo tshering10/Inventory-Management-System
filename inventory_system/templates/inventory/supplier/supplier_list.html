@@ -6,17 +6,21 @@
     <h2>My Suppliers</h2>
     <a href="{% url "add_supplier" %}" class="btn btn-primary mb-3">Add New Supplier</a>
 
-    <ul class="list-group">
+    <ul class="list-group col-md-6">
         {% for supplier in suppliers %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                     <strong>{{ supplier.company_name }}</strong><br>
                     {{ supplier.email }} | {{ supplier.phone }}
                 </div>
-                {% comment %} <div>
-                    <a href="{% url 'supplier-update' supplier.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="{% url 'supplier-delete' supplier.pk %}" class="btn btn-sm btn-danger">Delete</a>
-                </div> {% endcomment %}
+                 <div>
+                    <a href="{% url 'edit_supplier' supplier.pk %}" class="btn btn-sm btn-outline-primary" title='Edit'><i class="fas fa-edit"></i></a>
+
+                    <a href="{% url 'delete_supplier' supplier.pk %}" class="btn btn-sm btn-outline-danger" title="Delete ">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+
+                </div> 
             </li>
         {% empty %}
             <li class="list-group-item">No suppliers yet.</li>
