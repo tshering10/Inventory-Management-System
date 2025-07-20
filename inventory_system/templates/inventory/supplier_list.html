@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2>My Suppliers</h2>
-    <a href="#" class="btn btn-primary mb-3">Add New Supplier</a>
+    <a href="{% url "add_supplier" %}" class="btn btn-primary mb-3">Add New Supplier</a>
 
     <ul class="list-group">
         {% for supplier in suppliers %}
@@ -13,10 +13,10 @@
                     <strong>{{ supplier.company_name }}</strong><br>
                     {{ supplier.email }} | {{ supplier.phone }}
                 </div>
-                <div>
+                {% comment %} <div>
                     <a href="{% url 'supplier-update' supplier.pk %}" class="btn btn-sm btn-warning">Edit</a>
                     <a href="{% url 'supplier-delete' supplier.pk %}" class="btn btn-sm btn-danger">Delete</a>
-                </div>
+                </div> {% endcomment %}
             </li>
         {% empty %}
             <li class="list-group-item">No suppliers yet.</li>

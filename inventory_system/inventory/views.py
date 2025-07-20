@@ -3,7 +3,7 @@ from django.views.generic import TemplateView, ListView, CreateView, DeleteView,
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from inventory.models import Product, Category, Supplier
-from inventory.forms import  ContactMessageForm, ProductForm
+from inventory.forms import  ContactMessageForm, ProductForm, SupplierForm
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -113,3 +113,15 @@ class SupplierListView(ListView, LoginRequiredMixin):
     def get_queryset(self):
         return Supplier.objects.filter(owner=self.request.user)
   
+class SupplierCreateView(CreateView):
+    model = Supplier
+    form_class = SupplierForm
+    template_name = "inventory/supplier_create.html"
+    success_url = reverse_lazy('supplier_list')
+    
+    def form_valid(self, form):
+        supplier = form.save(commit=False)
+        supplier.owner = self.request.user
+        supplier.save()
+        return super().form_valid(form)
+    
