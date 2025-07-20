@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from inventory.models import Product, Category
+from inventory.models import Product, Category, Supplier
 from inventory.forms import  ContactMessageForm, ProductForm
 from django.contrib.auth.models import User
 
@@ -104,3 +104,12 @@ class ContactUs_view(FormView):
         form.save()
         return super().form_valid(form)
     
+
+class SupplierListView(ListView, LoginRequiredMixin):
+    model = Supplier
+    template_name = "inventory/supplier_list.html"
+    context_object_name = "suppliers"
+    
+    def get_queryset(self):
+        return Supplier.objects.filter(owner=self.request.user)
+  
