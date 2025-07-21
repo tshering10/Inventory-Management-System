@@ -38,6 +38,7 @@ class UserDetails(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
+    model = Supplier
     template_name = "inventory/user_dashboard.html"
     context_object_name = 'products'
     
@@ -54,6 +55,9 @@ class ProductListView(LoginRequiredMixin, ListView):
         
         context['total_categories'] = user_products.values('category').distinct().count()
         context['low_stock_count'] = user_products.filter(quantity__lt=10).count()
+        
+        suppliers = Supplier.objects.filter(owner=self.request.user)
+        context['total_suppliers'] = suppliers.values('company_name').distinct().count()
 
         return context
 
@@ -72,13 +76,13 @@ class ProductCreateView(CreateView):
     
 class EditProductView(LoginRequiredMixin,UpdateView):
     model = Product
-    fields = ['name','quantity','price','brand','category']
+    fields = ['name','quantity','price','brand','category','supplier']
     template_name = "inventory/edit_product.html"
     success_url = reverse_lazy('dashboard')
     
     def form_valid(self, form):
         product = form.save(commit=False)
-        product.category = form.changed_data['category']
+        product.category = form.cleaned_data['category']
         product.save()
         return super().form_valid(form)
     

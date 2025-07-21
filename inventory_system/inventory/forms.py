@@ -9,7 +9,7 @@ class ProductForm(forms.ModelForm):
     )
     class Meta:
         model = Product
-        fields = ['name','quantity','price','brand','category']
+        fields = ['name','quantity','price','brand','category','supplier']
      
     def clean_category(self):
         category_name = self.cleaned_data['category'].strip()

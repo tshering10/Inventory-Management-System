@@ -102,6 +102,7 @@
                                     <th scope="col">Product Name</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Brand</th>
+                                    <th scope="col">Supplier</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Price (Rs.)</th>
                                     <th scope="col" class="text-end">Actions</th>
@@ -113,11 +114,13 @@
                                     <td>{{ product.name }}</td>
                                     <td>{{ product.category.name|default:"N/A" }}</td>
                                     <td>{{ product.brand }}</td>
+                                    <td>{{ product.supplier.company_name|default:"N/A"}}</td>
                                     <td>
                                         <span class="badge rounded-pill {% if product.quantity < 10 %}bg-warning text-dark {% else %} text-dark{% endif %}">
                                             {{ product.quantity }}
                                         </span>
                                     </td>
+                                    
                                     
                                     <td>Rs. {{ product.price }}</td>
                                     <td class="text-end">
