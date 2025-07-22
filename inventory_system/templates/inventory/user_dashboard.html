@@ -51,7 +51,7 @@
                         <a class="nav-link text-secondary " href="{% url "profile-view" %}">Profile</a>
                     </li>
 
-                    <form method="POST" action="#">
+                    <form method="POST" action="{% url "logout" %}">
                     {% csrf_token %}
                         <li><button type="submit" class="dropdown-item text-secondary" >Logout</button></li>
                     </form>
