@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'inventory', #appname
     'accounts',
     'widget_tweaks',
+    'profile',
 ]
 
 MIDDLEWARE = [

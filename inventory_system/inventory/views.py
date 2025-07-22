@@ -61,6 +61,8 @@ class ProductListView(LoginRequiredMixin, ListView):
 
         return context
 
+    
+
 class ProductCreateView(CreateView):
     form_class = ProductForm
     template_name = "inventory/add_product.html"

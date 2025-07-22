@@ -42,12 +42,21 @@
                     <i class="fas fa-chart-line me-2"></i> Reports
                 </a>
             </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link text-secondary" href="#">
-                    <i class="fas fa-cog me-2"></i> Settings
+            <li class="nav-item mb-2 dropdown">
+                <a class="nav-link text-secondary dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-cog me-2"></i>Settings
                 </a>
+                <ul class="dropdown-menu border-0 bg-light ms-4">
+                    <li class="nav-item ">
+                        <a class="nav-link text-secondary " href="#">Profile</a>
+                    </li>
+
+                    <form method="POST" action="#">
+                    {% csrf_token %}
+                        <li><button type="submit" class="dropdown-item text-secondary" >Logout</button></li>
+                    </form>
+                </ul>
             </li>
-        </ul>
     </div>
 
     <div class="main-content flex-grow-1 p-4">
