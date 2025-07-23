@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from inventory.models import Product, Category, Supplier
 from inventory.forms import  ContactMessageForm, ProductForm, SupplierForm
 from django.contrib.auth.models import User
+from Profile.models import Profile
 
 # Create your views here.
 

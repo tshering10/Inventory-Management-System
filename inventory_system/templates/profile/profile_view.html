@@ -24,7 +24,7 @@
 
                     <!-- Profile Info -->
                     <div class="flex-grow-1">
-                        <h4 class="fw-bold text-primary mb-1">{{ profile.user.get_full_name|default:profile.user.username }}</h4>
+                        <h4 class="fw-bold text-primary mb-1">{{ profile.store_name|default:'--' }}</h4>
                         
                         {% if profile.bio %}
                             <p class="text-dark mb-2">{{ profile.bio }}</p>
