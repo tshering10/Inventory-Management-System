@@ -23,17 +23,23 @@
                     </div>
 
                     <!-- Profile Info -->
-                    <div class="flex-grow-1">
-                        <h4 class="fw-bold text-primary mb-1">{{ profile.store_name|default:'--' }}</h4>
+                    <div class="flex-grow-1 ms-5">
+                        <h4 class="fw-bold text-dark mb-1">{{ profile.store_name|default:'--' }}</h4>
                         
                         {% if profile.bio %}
-                            <p class="text-dark mb-2">{{ profile.bio }}</p>
+                            <p class="text-secondary mb-2">{{ profile.bio }}</p>
                         {% else %}
                             <p class="text-muted mb-2">No bio provided yet.</p>
                         {% endif %}
 
                         <p class="text-muted mb-2">
                             <i class="fas fa-envelope me-2 text-secondary"></i>{{ profile.user.email }}
+                        </p>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-map-marker-alt me-2 text-secondary"></i>{{ profile.address }}
+                        </p>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-phone me-2 text-secondary"></i>{{ profile.phone }}
                         </p>
                         <p class="text-muted small">
                             <i class="fas fa-calendar-alt me-2"></i>Joined on {{ profile.created_at|date:"F j, Y" }}

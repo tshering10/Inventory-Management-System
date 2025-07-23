@@ -8,9 +8,10 @@ from django.contrib.auth.models import User
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['profile_image','bio', 'address', 'phone']
+        fields = ['store_name','profile_image','bio', 'address', 'phone']
         
         widgets = {
+            'profile_image': forms.FileInput(attrs={'class': 'form-cotrol'}),
             'bio': forms.Textarea(attrs={'rows': 2, 'class': 'form-control'}),
         }
 

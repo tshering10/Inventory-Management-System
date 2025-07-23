@@ -1,12 +1,75 @@
 {% extends "inventory/base.html" %}
-{% block title %}Edit Profile{% endblock title %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Profile{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <form method='POST'>
-            {% csrf_token %}
-            {{user_form.as_p}}
-            {{ profile_form.as_p }}
-            <button type="submit">Update Profile</button>
-        </form>
-    </div>
-{% endblock content %}
+<div class="container py-3">
+    <h2 class="mb-4 text-primary fw-bold">Edit Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="row g-5">
+        {% csrf_token %}
+
+        <!-- User Info Card -->
+        <div class="col-md-6 ">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white fw-semibold">
+                    User Information
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Store Name</label>
+                        {{ profile_form.store_name|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        {{ user_form.username|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        {{ user_form.email|add_class:"form-control" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Info Card -->
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-secondary text-white fw-semibold">
+                    Profile Information
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Profile Image</label><br>
+                        {% if profile_form.instance.profile_image %}
+                            <img src="{{ profile_form.instance.profile_image.url }}" class="img-thumbnail mb-2" width="100">
+                        {% endif %}
+                        {{ profile_form.profile_image|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Bio</label>
+                        {{ profile_form.bio|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        {{ profile_form.address|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        {{ profile_form.phone|add_class:"form-control" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
