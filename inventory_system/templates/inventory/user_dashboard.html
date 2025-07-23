@@ -3,158 +3,315 @@
 {% block title %}Dashboard{% endblock title %}
 
 {% block content %}
-<div class="d-flex bg-light">
-    <div class="sidebar bg-light border rounded text-secondary p-3 shadow-lg " style="width: 220px; min-height: calc(100vh - 56px);"> 
-        <h5 class="mb-4 mt-3">Inventory Menu</h5>
-        <ul class="nav flex-column">
-            <li class="nav-item mb-2">
-                <a class="nav-link text-secondary active" href="#">
-                         Dashboard
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link text-secondary" href="#">
-                    <i class="fas fa-box me-2"></i> Products
-                </a>
-            </li>
-            {% comment %} <li class="nav-item mb-2">
-                <a class="nav-link text-secondary" href="#"> 
-                    <i class="fas fa-tags me-2"></i> Categories
-                </a>
-            </li> {% endcomment %}
-            <li class="nav-item mb-2">
-                <a class="nav-link text-secondary" href="{% url "supplier_list" %}">
-                    <i class="fas fa-truck me-2"></i> Suppliers
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link text-secondary" href="#">
-                    <i class="fas fa-shopping-cart me-2"></i> Sales Orders
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a class="nav-link text-secondary" href="#">
-                    <i class="fas fa-clipboard-list me-2"></i> Purchase Orders
-                </a>
-            </li>
-             <li class="nav-item mb-2">
-                <a class="nav-link text-secondary" href="#"> 
-                    <i class="fas fa-chart-line me-2"></i> Reports
-                </a>
-            </li>
-            <li class="nav-item mb-2 dropdown">
-                <a class="nav-link text-secondary dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fas fa-cog me-2"></i>Settings
-                </a>
-                <ul class="dropdown-menu border-0 bg-light ms-4">
-                    <li class="nav-item ">
-                        <a class="nav-link text-secondary " href="{% url "profile-view" %}">Profile</a>
-                    </li>
+<div class="d-flex bg-light min-vh-100">
+    <!-- Enhanced Sidebar -->
+    <div class="sidebar bg-white border-end shadow-sm" style="width: 280px; min-height: calc(100vh - 56px);"> 
+        <div class="p-4">
+            <div class="d-flex align-items-center mb-4">
+                <div class="bg-primary rounded-circle p-2 me-3">
+                    <i class="fas fa-boxes text-white"></i>
+                </div>
+                <h4 class="mb-0 fw-bold text-dark">Inventory</h4>
+            </div>
+            
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-dark bg-primary bg-opacity-10 rounded-3 py-3 px-3 fw-medium" href="{% url "dashboard" %}">
+                        <i class="fas fa-tachometer-alt me-3 text-primary"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-secondary py-3 px-3 rounded-3 hover-bg-light" href="#">
+                        <i class="fas fa-box me-3"></i> Products
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-secondary py-3 px-3 rounded-3 hover-bg-light" href="{% url "supplier_list" %}">
+                        <i class="fas fa-truck me-3"></i> Suppliers
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-secondary py-3 px-3 rounded-3 hover-bg-light" href="#">
+                        <i class="fas fa-shopping-cart me-3"></i> Sales Orders
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-secondary py-3 px-3 rounded-3 hover-bg-light" href="#">
+                        <i class="fas fa-clipboard-list me-3"></i> Purchase Orders
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-secondary py-3 px-3 rounded-3 hover-bg-light" href="#"> 
+                        <i class="fas fa-chart-line me-3"></i> Reports
+                    </a>
+                </li>
+            </ul>
 
-                    <form method="POST" action="{% url "logout" %}">
-                    {% csrf_token %}
-                        <li><button type="submit" class="dropdown-item text-secondary" >Logout</button></li>
-                    </form>
+            <hr class="my-4">
+
+            <div class="dropdown">
+                <a class="nav-link text-secondary dropdown-toggle py-3 px-3 rounded-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-cog me-3"></i>Settings
+                </a>
+                <ul class="dropdown-menu border-0 shadow">
+                    <li><a class="dropdown-item py-2" href="{% url "profile-view" %}"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form method="POST" action="{% url "logout" %}" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item py-2 text-danger">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </button>
+                        </form>
+                    </li>
                 </ul>
-            </li>
+            </div>
+        </div>
     </div>
 
-    <div class="main-content flex-grow-1 p-4">
+    <!-- Main Content -->
+    <div class="main-content flex-grow-1 p-4" style="background-color: #f8f9fc;">
+        
+        <!-- Header Section -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">Inventory Dashboard</h2>
+                <p class="text-muted mb-0">Overview of your inventory performance</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="input-group me-3" style="width: 300px;">
+                    <input type="text" class="form-control border-start-0 ps-0" placeholder="Search products...">
+                    <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>  
+                </div>
+            </div>
+        </div>
 
+        <!-- Enhanced Stats Cards -->
         <div class="row mb-5">
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-muted mb-3">Total Products</h5>
-                        <h2 class="text-secondary fw-sm">{{ total_products|default:"--" }}</h2>
+                <div class="card border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="card-body text-center text-white">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6 class="card-title text-white-50 mb-1">Total Products</h6>
+                                <h2 class="fw-bold mb-0">{{ total_products|default:"--" }}</h2>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-circle p-2">
+                                <i class="fas fa-boxes"></i>
+                            </div>
+                        </div>
+                        <small class="text-white-50">Types in Stock</small>
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-muted mb-3">Low Stock Items</h5>
-                        <h2 class="text-secondary fw-sm">{{ low_stock_count|default:"--" }}</h2>
+                <div class="card border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="card-body text-center text-white">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6 class="card-title text-white-50 mb-1">Low Stock Items</h6>
+                                <h2 class="fw-bold mb-0">{{ low_stock_count|default:"--" }}</h2>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-circle p-2">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <small class="text-white-50">Need Attention</small>
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-muted mb-3">Product Categories</h5>
-                        <h2 class="text-secondary fw-sm">{{ total_categories|default:"--" }}</h2>
+                <div class="card border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="card-body text-center text-white">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6 class="card-title text-white-50 mb-1">Categories</h6>
+                                <h2 class="fw-bold mb-0">{{ total_categories|default:"--" }}</h2>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-circle p-2">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                        </div>
+                        <small class="text-white-50">Product Types</small>
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-muted mb-3">Active Suppliers</h5>
-                        <h2 class="text-secondary fw-sm">{{ total_suppliers|default:"--" }}</h2>
+                <div class="card border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="card-body text-center text-white">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6 class="card-title text-white-50 mb-1">Active Suppliers</h6>
+                                <h2 class="fw-bold mb-0">{{ total_suppliers|default:"--" }}</h2>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-circle p-2">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                        </div>
+                        <small class="text-white-50">Partners</small>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Your Products Overview</h4>
-                <a href="{% url "add-product" %}" class="btn btn-outline-secondary btn-sm">
-                    <i class="fas fa-plus me-2"></i>Add Product</a>
+        <!-- Content Cards Row -->
+        <div class="row">
+            <!-- Products Overview -->
+            <div class="col-lg-8 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white border-bottom-0 py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 fw-bold">Products Overview</h5>
+                            <a href="#" class="text-primary text-decoration-none fw-medium">See All →</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        {% if products %}
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th scope="col" class="border-0 py-3 ps-4">Product Name</th>
+                                            <th scope="col" class="border-0 py-3">Category</th>
+                                            <th scope="col" class="border-0 py-3">Brand</th>
+                                            <th scope="col" class="border-0 py-3">Supplier</th>
+                                            <th scope="col" class="border-0 py-3">Quantity</th>
+                                            <th scope="col" class="border-0 py-3">Price (Rs.)</th>
+                                            <th scope="col" class="border-0 py-3 text-end pe-4">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for product in products %}
+                                        <tr class="border-bottom">
+                                            <td class="py-3 ps-4">
+                                                <div class="fw-medium">{{ product.name }}</div>
+                                            </td>
+                                            <td class="py-3">
+                                                <span class="badge bg-light text-dark">{{ product.category.name|default:"N/A" }}</span>
+                                            </td>
+                                            <td class="py-3">{{ product.brand }}</td>
+                                            <td class="py-3">{{ product.supplier.company_name|default:"N/A"}}</td>
+                                            <td class="py-3">
+                                                <span class="badge rounded-pill {% if product.quantity < 10 %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                                                    {{ product.quantity }}
+                                                </span>
+                                            </td>
+                                            <td class="py-3 fw-medium">Rs. {{ product.price }}</td>
+                                            <td class="py-3 text-end pe-4">
+                                                <div class="btn-group" role="group">
+                                                    <a href="{% url "edit-product" product.pk %}" class="btn btn-sm btn-outline-primary" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="{% url "delete-product" product.pk %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="text-center py-5">
+                                <div class="mb-4">
+                                    <i class="fas fa-box-open fa-3x text-muted"></i>
+                                </div>
+                                <h5 class="text-muted mb-3">No Products Yet</h5>
+                                <p class="text-muted">Start by adding your first product to the inventory</p>
+                                <a href="{% url 'add-product' %}" class="btn btn-primary shadow-sm">
+                                    <i class="fas fa-plus me-2"></i> Add Your First Product
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="card-body p-0">
-                {% if products %}
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Category</th>
-                                    <th scope="col">Brand</th>
-                                    <th scope="col">Supplier</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Price (Rs.)</th>
-                                    <th scope="col" class="text-end">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for product in products %}
-                                <tr>
-                                    <td>{{ product.name }}</td>
-                                    <td>{{ product.category.name|default:"N/A" }}</td>
-                                    <td>{{ product.brand }}</td>
-                                    <td>{{ product.supplier.company_name|default:"N/A"}}</td>
-                                    <td>
-                                        <span class="badge rounded-pill {% if product.quantity < 10 %}bg-warning text-dark {% else %} text-dark{% endif %}">
-                                            {{ product.quantity }}
-                                        </span>
-                                    </td>
-                                    
-                                    
-                                    <td>Rs. {{ product.price }}</td>
-                                    <td class="text-end">
-                                        <a href="{% url "edit-product" product.pk %}" class="btn btn-sm btn-outline-primary me-2" title="Edit Product">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="{% url "delete-product" product.pk %}" class="btn btn-sm btn-outline-danger" title="Delete Product">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+
+            <!-- Quick Actions & Alerts -->
+            <div class="col-lg-4">
+                <!-- Low Stock Alerts -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom-0 py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 fw-bold">Low Stock Alerts</h6>
+                            <a href="#" class="text-primary text-decoration-none">See All</a>
+                        </div>
                     </div>
-                {% else %}
-                    <div class="text-center py-5">
-                        <p class="text-muted lead">You haven't added any products yet.</p>
-                        <a href="{% url 'add-product' %}" class="btn btn-primary shadow-sm">
-                            <i class="fas fa-plus me-2"></i> Add Your First Product
-                        </a>
+                    <div class="card-body">
+                        {% if products %}
+                            {% for product in products %}
+                                {% if product.quantity < 10 %}
+                                <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                                    <div class="bg-warning bg-opacity-10 rounded-circle p-2 me-3">
+                                        <i class="fas fa-exclamation-triangle text-warning"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1 fw-medium">{{ product.name }}</h6>
+                                        <small class="text-muted">{{ product.quantity }} units remaining</small>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="text-center py-3">
+                                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                                    <p class="text-muted small mb-0">All items are well stocked</p>
+                                </div>
+                                {% endif %}
+                            {% endfor %}               
+                        {% endif %}
                     </div>
-                {% endif %}
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom-0 py-3">
+                        <h6 class="mb-0 fw-bold">Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'add-product' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-plus me-2"></i>Add New Product
+                            </a>
+                            <a href="{% url 'supplier_list' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-truck me-2"></i>Manage Suppliers
+                            </a>
+                            <a href="#" class="btn btn-outline-info">
+                                <i class="fas fa-chart-line me-2"></i>View Reports
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.hover-bg-light:hover {
+    background-color: rgba(0,0,0,0.05) !important;
+}
+
+.card {
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.sidebar .nav-link {
+    transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+    transform: translateX(5px);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+</style>
 {% endblock content %}
