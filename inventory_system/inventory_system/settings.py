@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'accounts',
     'widget_tweaks',
     'Profile',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
