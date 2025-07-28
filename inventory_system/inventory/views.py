@@ -6,7 +6,7 @@ from inventory.models import Product, Category, Supplier
 from inventory.forms import  ContactMessageForm, ProductForm, SupplierForm
 from django.contrib.auth.models import User
 from Profile.models import Profile
-
+from django.contrib import messages
 # Create your views here.
 
 class HomeView(TemplateView):
@@ -75,6 +75,7 @@ class ProductCreateView(CreateView):
         product.owner = self.request.user
         
         product.save()
+        messages.success(self.request, "New product has been added successfully.")
         return super().form_valid(form)
     
 class EditProductView(LoginRequiredMixin,UpdateView):
@@ -87,6 +88,7 @@ class EditProductView(LoginRequiredMixin,UpdateView):
         product = form.save(commit=False)
         product.category = form.cleaned_data['category']
         product.save()
+        messages.success(self.request, "Product details updated.")
         return super().form_valid(form)
     
     
@@ -99,6 +101,11 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         product = self.get_object()
         return self.request.user == product.owner
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.info(self.request, "Your product has been deleted.")
+        return response
+    
 class AboutUs_view(TemplateView):
     template_name = "inventory/about_us.html"
     
@@ -109,6 +116,7 @@ class ContactUs_view(FormView):
     
     def form_valid(self, form):
         form.save()
+        messages.success(self.request, "Message sent successfully.")
         return super().form_valid(form)
     
 
@@ -130,6 +138,7 @@ class SupplierCreateView(CreateView):
         supplier = form.save(commit=False)
         supplier.owner = self.request.user
         supplier.save()
+        messages.success(self.request, "New supplier has been added successfully.")
         return super().form_valid(form)
     
 class SupplierUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -142,6 +151,11 @@ class SupplierUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         supplier = self.get_object()
         return supplier.owner == self.request.user
     
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "Supplier details updated successfully.")
+        return super().form_valid(form)
+    
 class SupplierDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Supplier
     template_name = "inventory/supplier/supplier_delete.html"
@@ -150,3 +164,7 @@ class SupplierDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         supplier = self.get_object()
         return supplier.owner == self.request.user
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Supplier account deleted successfully.")
+        return super().form_valid(form)
