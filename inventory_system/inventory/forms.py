@@ -28,9 +28,9 @@ class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
         fields = ['company_name', 'email', 'phone', 'address']
-        
-        def clean_phone(self):
-            phone = self.cleaned_data.get("phone")
-            if not re.match(r'^\+?\d{7,15}$', phone):
-                raise forms.ValidationError("Enter a valid phone number.")
-            return phone
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get("phone")
+        if not re.match(r'^\+?\d{7,15}$', phone):
+            raise forms.ValidationError("Enter a valid phone number.")
+        return phone
