@@ -7,6 +7,8 @@ from inventory.forms import  ContactMessageForm, ProductForm, SupplierForm
 from django.contrib.auth.models import User
 from Profile.models import Profile
 from django.contrib import messages
+from django.db.models import Q
+
 # Create your views here.
 
 class HomeView(TemplateView):
@@ -39,11 +41,16 @@ class UserDetails(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
-    model = Supplier
     template_name = "inventory/user_dashboard.html"
     context_object_name = 'products'
     
     def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Product.objects.filter(
+                Q(name__icontains=query) |
+                Q(brand__icontains=query)
+            )
         return Product.objects.filter(owner = self.request.user)
     
     def get_context_data(self, **kwargs):
@@ -126,7 +133,12 @@ class SupplierListView(ListView, LoginRequiredMixin):
     context_object_name = "suppliers"
     
     def get_queryset(self):
-        return Supplier.objects.filter(owner=self.request.user)
+        query = self.request.GET.get('q')
+        if query:
+            return Supplier.objects.filter(
+                Q(company_name__icontains=query)
+            )
+        return Supplier.objects.all()
   
 class SupplierCreateView(CreateView):
     model = Supplier
