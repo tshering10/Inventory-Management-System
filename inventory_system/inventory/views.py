@@ -43,6 +43,7 @@ class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = "inventory/user_dashboard.html"
     context_object_name = 'products'
+    paginate_by = 8
     
     def get_queryset(self):
         query = self.request.GET.get('q')
@@ -131,6 +132,7 @@ class SupplierListView(ListView, LoginRequiredMixin):
     model = Supplier
     template_name = "inventory/supplier/supplier_list.html"
     context_object_name = "suppliers"
+    paginate_by = 6
     
     def get_queryset(self):
         query = self.request.GET.get('q')
