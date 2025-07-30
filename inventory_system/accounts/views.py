@@ -5,6 +5,7 @@ from .forms import CustomSignupForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.conf import settings
 
 class SignupView(CreateView):
     form_class = CustomSignupForm
@@ -26,6 +27,12 @@ class CusotmLoginView(LoginView):
         return reverse_lazy('dashboard')
     
     def form_valid(self, form):
+        remember_me = self.request.POST.get("remember_me")
+        if not remember_me:
+            self.request.session.set_expiry(0)
+        else:
+            self.request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+            
         response = super().form_valid(form)
         messages.success(self.request, "You are successfully logged in.")
         return response

@@ -143,3 +143,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_USER = 'yourgmail@gmail.com'
 # EMAIL_HOST_PASSWORD = 'your-app-password'  # Not your actual Gmail password!
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+SESSION_COOKIE_AGE = 86400 # 2 weeks
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
